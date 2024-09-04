@@ -1,0 +1,42 @@
+.info {
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+}
+.contact {
+  display: flex;
+  border: 1px solid #007bff;
+  box-sizing: border-box;
+  padding: 8px;
+  border-radius: 4px;
+  justify-content: space-between;
+  align-items: center;
+  width: calc((100% - 20px) / 2);
+}
+.btn {
+  width: 80px;
+  height: 25px;
+  font-size: 14px;
+  box-sizing: border-box;
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  outline: none;
+  border: 1px solid #007bff;
+}
+.btn:hover {
+  background-color: #007bffc1;
+}
+.icon {
+  margin-right: 8px;
+}
+.number:hover {
+  color: #007bffc1;
+}
+@media (max-width: 768px) {
+  .contact {
+    width: 100%;
+  }
+}
