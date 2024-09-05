@@ -1,15 +1,11 @@
 import { useDispatch } from 'react-redux';
-import { addContact } from '../../redux/contacts/operations';
+import { editContact } from '../../redux/contacts/operations';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import css from './ContactForm.module.css';
+import css from './EditForm.module.css';
+import { closeEditModal } from '../../redux/modal/slice';
 
-const initialValues = {
-  name: '',
-  number: '',
-};
-
-const ContactFormSchema = Yup.object().shape({
+const EditFormSchema = Yup.object().shape({
   name: Yup.string()
     .trim()
     .min(2, 'Too Short!')
@@ -26,23 +22,30 @@ const ContactFormSchema = Yup.object().shape({
     .required('Required'),
 });
 
-const ContactForm = () => {
+const EditForm = ({ contactId, initialName, initialNumber }) => {
   const dispatch = useDispatch();
+  const initialValues = {
+    name: initialName || '',
+    number: initialNumber || '',
+  };
+
   const handleSubmit = (values, actions) => {
-    const newContact = {
+    const updateContact = {
       ...values,
     };
-    dispatch(addContact(newContact));
+    // Використання patch для часткового оновлення контакту
+    dispatch(editContact({ contactId, updateContact }));
     actions.resetForm();
+    dispatch(closeEditModal());
   };
+
   return (
     <>
-      <h2 className={css.title}>Add contact</h2>
       <div className={css.wrapper}>
         <Formik
           initialValues={initialValues}
           onSubmit={handleSubmit}
-          validationSchema={ContactFormSchema}
+          validationSchema={EditFormSchema}
         >
           <Form className={css.form}>
             <Field
@@ -64,7 +67,7 @@ const ContactForm = () => {
               component="span"
             />
             <button className={css.btn} type="submit">
-              Add contact
+              Edit contact
             </button>
           </Form>
         </Formik>
@@ -73,4 +76,4 @@ const ContactForm = () => {
   );
 };
 
-export default ContactForm;
+export default EditForm;

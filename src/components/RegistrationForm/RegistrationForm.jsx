@@ -1,70 +1,78 @@
 import { useDispatch } from 'react-redux';
-import { addContact } from '../../redux/contacts/operations';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import css from './ContactForm.module.css';
+import css from './RegistrationForm.module.css';
+import { register } from '../../redux/auth/operations';
 
 const initialValues = {
   name: '',
-  number: '',
+  email: '',
+  password: '',
 };
 
-const ContactFormSchema = Yup.object().shape({
+const RegistrationFormSchema = Yup.object().shape({
   name: Yup.string()
     .trim()
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Required'),
-  number: Yup.string()
+  email: Yup.string().email('Invalid email format').required('Required'),
+  password: Yup.string()
     .trim()
+    .min(8, 'Password must be at least 8 characters long')
     .matches(
-      /^[0-9+\-()]+$/,
-      'Invalid format, only numbers and +, -, () are allowed'
+      /^[a-zA-Z0-9!@#$%^&*()_+\-={}';:"\\|,.<>/?]*$/,
+      'Invalid format, allowed characters: letters, numbers, special symbols'
     )
-    .min(2, 'Too Short!')
-    .max(50, 'Too Long!')
     .required('Required'),
 });
 
-const ContactForm = () => {
+const RegistrationForm = () => {
   const dispatch = useDispatch();
   const handleSubmit = (values, actions) => {
-    const newContact = {
+    const newProfile = {
       ...values,
     };
-    dispatch(addContact(newContact));
+    dispatch(register(newProfile));
     actions.resetForm();
   };
   return (
     <>
-      <h2 className={css.title}>Add contact</h2>
+      <h2 className={css.title}>Registration form</h2>
       <div className={css.wrapper}>
         <Formik
           initialValues={initialValues}
           onSubmit={handleSubmit}
-          validationSchema={ContactFormSchema}
+          validationSchema={RegistrationFormSchema}
         >
           <Form className={css.form}>
             <Field
               className={css.input}
               type="text"
               name="name"
-              placeholder="Enter contact Name"
+              placeholder="Enter your name"
             />
             <ErrorMessage className={css.error} name="name" component="span" />
             <Field
               className={css.input}
-              type="text"
-              name="number"
-              placeholder="Enter phone number"
+              type="email"
+              name="email"
+              placeholder="Enter email"
+            />
+            <ErrorMessage className={css.error} name="email" component="span" />
+            <Field
+              className={css.input}
+              type="password"
+              name="password"
+              placeholder="Enter password"
             />
             <ErrorMessage
               className={css.error}
-              name="number"
+              name="password"
               component="span"
             />
             <button className={css.btn} type="submit">
-              Add contact
+              registration
             </button>
           </Form>
         </Formik>
@@ -73,4 +81,4 @@ const ContactForm = () => {
   );
 };
 
-export default ContactForm;
+export default RegistrationForm;

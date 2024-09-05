@@ -1,0 +1,21 @@
+.btn {
+  font-size: 14px;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 10px 10px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  outline: none;
+  border: 1px solid #007bff;
+}
+.btn:hover {
+  background-color: #007bffc1;
+}
+.userInfo {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}

@@ -1,8 +1,12 @@
-import { createSelector, createSlice } from '@reduxjs/toolkit';
-import { addContact, deleteContact, fetchContacts } from './contactsOps';
-import { selectNameFilter } from './filtersSlice';
+import { createSlice } from '@reduxjs/toolkit';
+import {
+  addContact,
+  deleteContact,
+  editContact,
+  fetchContacts,
+} from './operations';
 
-const INITIAL_STATE = {
+const initialState = {
   items: [],
   loading: false,
   error: null,
@@ -10,7 +14,12 @@ const INITIAL_STATE = {
 
 const contactsSlice = createSlice({
   name: 'contacts',
-  initialState: INITIAL_STATE,
+  initialState,
+  reducers: {
+    clearContacts: state => {
+      state.items = [];
+    },
+  },
   extraReducers: builder =>
     builder
       .addCase(fetchContacts.pending, state => {
@@ -48,19 +57,25 @@ const contactsSlice = createSlice({
       .addCase(deleteContact.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(editContact.pending, state => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(editContact.fulfilled, (state, action) => {
+        const index = state.items.findIndex(
+          item => item.id === action.payload.id
+        );
+        if (index !== -1) {
+          state.items[index] = action.payload;
+        }
+        state.loading = false;
+      })
+      .addCase(editContact.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       }),
 });
 
 export const contactsReducer = contactsSlice.reducer;
-
-export const selectContacts = state => state.contacts.items;
-export const selectIsLoading = state => state.contacts.loading;
-export const selectError = state => state.contacts.error;
-
-export const selectFilteredContacts = createSelector(
-  [selectContacts, selectNameFilter],
-  (contacts, filterValue) =>
-    contacts.filter(contact => {
-      return contact.name.toLowerCase().includes(filterValue.toLowerCase());
-    })
-);
+export const { clearContacts } = contactsSlice.actions;
