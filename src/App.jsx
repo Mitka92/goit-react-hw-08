@@ -47,6 +47,10 @@ function App() {
             <PrivateRoute redirectTo="/login" component={<ContactsPage />} />
           }
         />
+        <Route
+          path="*"
+          element={<PrivateRoute redirectTo="/" component={<HomePage />} />}
+        />
       </Routes>
     </Layout>
   );

@@ -15,6 +15,7 @@ import {
 import Modal from '../Modal/Modal';
 import { useCallback, useState } from 'react';
 import { deleteContact } from '../../redux/contacts/operations';
+import Container from '../Container/Container';
 
 const ContactList = () => {
   const dispatch = useDispatch();
@@ -51,20 +52,21 @@ const ContactList = () => {
   return (
     <>
       <h2 className={css.title}>Contacts</h2>
-      <div className={css['contacts-list']}>
-        {filteredContacts.map(({ id, name, number }) => (
-          <Contact
-            key={id}
-            name={name}
-            number={number}
-            id={id}
-            sendDataToParent={handleDataFromChild}
-          />
-        ))}
-      </div>
-      {isLoading && 'Loading...'}
-      {error && `${error}`}
-
+      <Container>
+        <div className={css['contacts-list']}>
+          {filteredContacts.map(({ id, name, number }) => (
+            <Contact
+              key={id}
+              name={name}
+              number={number}
+              id={id}
+              sendDataToParent={handleDataFromChild}
+            />
+          ))}
+        </div>
+        {isLoading && 'Loading...'}
+        {error && `${error}`}
+      </Container>
       {isEditModalOpen && (
         <Modal
           isOpen={isEditModalOpen}

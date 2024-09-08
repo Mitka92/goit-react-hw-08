@@ -28,16 +28,16 @@ const Contact = ({ id, name, number, sendDataToParent }) => {
   return (
     <>
       <li className={css.contact}>
-        <span className={css.info}>
-          <span className={css.name}>
+        <div className={css.info}>
+          <div className={css.name}>
             <IconContext.Provider
               value={{ color: 'blue', className: [css.icon] }}
             >
               <IoIosContact />
             </IconContext.Provider>
             <b>{name}</b>
-          </span>
-          <span className={css.number}>
+          </div>
+          <div className={css.number}>
             <a href={`tel:${number}`}>
               <IconContext.Provider
                 value={{ color: 'blue', className: [css.icon] }}
@@ -46,24 +46,26 @@ const Contact = ({ id, name, number, sendDataToParent }) => {
               </IconContext.Provider>
               {number}
             </a>
-          </span>
-        </span>
-        <button
-          disabled={isLoading}
-          type="button"
-          className={css.btn}
-          onClick={handleDelete}
-        >
-          Delete
-        </button>
-        <button
-          disabled={isLoading}
-          type="button"
-          className={css.btn}
-          onClick={handleEdit}
-        >
-          Edit
-        </button>
+          </div>
+        </div>
+        <div className={css.btnBox}>
+          <button
+            disabled={isLoading}
+            type="button"
+            className={css.btn}
+            onClick={handleDelete}
+          >
+            Delete
+          </button>
+          <button
+            disabled={isLoading}
+            type="button"
+            className={css.btn}
+            onClick={handleEdit}
+          >
+            Edit
+          </button>
+        </div>
       </li>
     </>
   );
