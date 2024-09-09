@@ -82,7 +82,7 @@ const RegistrationForm = () => {
               component="span"
             />
             <button className={css.btn} type="submit">
-              registration
+              Registration
             </button>
           </Form>
         </Formik>

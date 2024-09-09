@@ -72,7 +72,7 @@ const EditForm = ({ contactId, initialName, initialNumber }) => {
               component="span"
             />
             <button className={css.btn} type="submit">
-              Edit contact
+              Save
             </button>
           </Form>
         </Formik>

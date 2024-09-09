@@ -35,8 +35,8 @@ const ContactForm = () => {
     };
     dispatch(addContact(newContact))
       .unwrap()
-      .then(() => {
-        toast.success('Contact added successfully🎉');
+      .then(data => {
+        toast.success(`Contact ${data.name} added!`);
         actions.resetForm();
       });
   };
