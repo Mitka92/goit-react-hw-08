@@ -57,23 +57,26 @@ const ContactList = () => {
 
   return (
     <>
-      <h2 className={css.title}>Contacts</h2>
-
       {isLoading ? (
         <Loader />
       ) : (
         <Container>
-          <div className={css['contacts-list']}>
-            {filteredContacts.map(({ id, name, number }) => (
-              <Contact
-                key={id}
-                name={name}
-                number={number}
-                id={id}
-                sendDataToParent={handleDataFromChild}
-              />
-            ))}
-          </div>
+          <h2 className={css.title}>Contacts</h2>
+          {filteredContacts.length ? (
+            <div className={css['contacts-list']}>
+              {filteredContacts.map(({ id, name, number }) => (
+                <Contact
+                  key={id}
+                  name={name}
+                  number={number}
+                  id={id}
+                  sendDataToParent={handleDataFromChild}
+                />
+              ))}
+            </div>
+          ) : (
+            <h3 style={{ textAlign: 'center' }}>No match found!</h3>
+          )}
         </Container>
       )}
       {error && `${error}`}
