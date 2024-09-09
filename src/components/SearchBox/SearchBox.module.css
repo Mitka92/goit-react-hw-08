@@ -1,11 +1,13 @@
 .wrapper {
+  display: flex;
   border: 1px solid #007bff;
   border-radius: 10px;
   padding: 10px;
-  width: 300px;
+  max-width: 300px;
+  justify-content: center;
+  align-items: center;
   margin: 0 auto;
   margin-bottom: 20px;
-  margin-top: 10px;
 }
 .input {
   border: 1px solid #007bff;
@@ -13,6 +15,7 @@
   padding: 8px;
   border-radius: 4px;
   outline: none;
+  margin: 0 auto;
 }
 
 .title {

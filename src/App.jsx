@@ -2,15 +2,21 @@ import './App.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Layout from './components/Layout/Layout';
 import { refreshUser } from './redux/auth/operations';
-import HomePage from './pages/HomePage/HomePage';
-import RegistrationPage from './pages/RegistrationPage/RegistrationPage';
-import LoginPage from './pages/LoginPage/LoginPage';
-import ContactsPage from './pages/ContactsPage/ContactsPage';
+import { selectIsRefreshing } from './redux/auth/selctors';
+import { lazy } from 'react';
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage/NotFoundPage'));
+const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
+const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'));
+const ContactsPage = lazy(() => import('./pages/ContactsPage/ContactsPage'));
+const RegistrationPage = lazy(() =>
+  import('./pages/RegistrationPage/RegistrationPage')
+);
+
+import Layout from './components/Layout/Layout';
 import RestrictedRoute from './components/RestrictedRoute/RestrictedRoute';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
-import { selectIsRefreshing } from './redux/auth/selctors';
+import Loader from './components/Loader/Loader';
 
 function App() {
   const dispatch = useDispatch();
@@ -21,7 +27,7 @@ function App() {
   }, [dispatch]);
 
   return isRefreshing ? (
-    <b>Refreshing user...</b>
+    <Loader />
   ) : (
     <Layout>
       <Routes>
@@ -47,10 +53,7 @@ function App() {
             <PrivateRoute redirectTo="/login" component={<ContactsPage />} />
           }
         />
-        <Route
-          path="*"
-          element={<PrivateRoute redirectTo="/" component={<HomePage />} />}
-        />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Layout>
   );

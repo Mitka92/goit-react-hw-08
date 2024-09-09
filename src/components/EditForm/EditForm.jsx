@@ -4,6 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import css from './EditForm.module.css';
 import { closeEditModal } from '../../redux/modal/slice';
+import toast from 'react-hot-toast';
 
 const EditFormSchema = Yup.object().shape({
   name: Yup.string()
@@ -33,8 +34,12 @@ const EditForm = ({ contactId, initialName, initialNumber }) => {
     const updateContact = {
       ...values,
     };
-    // Використання patch для часткового оновлення контакту
-    dispatch(editContact({ contactId, updateContact }));
+
+    dispatch(editContact({ contactId, updateContact }))
+      .unwrap()
+      .then(data => {
+        toast.success(`Contact ${data.name} is edited!`);
+      });
     actions.resetForm();
     dispatch(closeEditModal());
   };

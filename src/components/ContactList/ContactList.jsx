@@ -16,6 +16,8 @@ import Modal from '../Modal/Modal';
 import { useCallback, useState } from 'react';
 import { deleteContact } from '../../redux/contacts/operations';
 import Container from '../Container/Container';
+import Loader from '../Loader/Loader';
+import toast from 'react-hot-toast';
 
 const ContactList = () => {
   const dispatch = useDispatch();
@@ -45,28 +47,36 @@ const ContactList = () => {
     }
   };
   const handleDeleteContact = contactId => {
-    dispatch(deleteContact(contactId));
+    dispatch(deleteContact(contactId))
+      .unwrap()
+      .then(data => {
+        toast.success(`Contact ${data.name} is deleted!`);
+      });
     dispatch(closeDeleteModal());
   };
 
   return (
     <>
       <h2 className={css.title}>Contacts</h2>
-      <Container>
-        <div className={css['contacts-list']}>
-          {filteredContacts.map(({ id, name, number }) => (
-            <Contact
-              key={id}
-              name={name}
-              number={number}
-              id={id}
-              sendDataToParent={handleDataFromChild}
-            />
-          ))}
-        </div>
-        {isLoading && 'Loading...'}
-        {error && `${error}`}
-      </Container>
+
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <Container>
+          <div className={css['contacts-list']}>
+            {filteredContacts.map(({ id, name, number }) => (
+              <Contact
+                key={id}
+                name={name}
+                number={number}
+                id={id}
+                sendDataToParent={handleDataFromChild}
+              />
+            ))}
+          </div>
+        </Container>
+      )}
+      {error && `${error}`}
       {isEditModalOpen && (
         <Modal
           isOpen={isEditModalOpen}
@@ -91,22 +101,25 @@ const ContactList = () => {
             Are you sure you want to delete <b>{editContact.initialName} </b>
             contact?
           </p>
-          <button
-            className={css.btn}
-            type="button"
-            onClick={() => handleDeleteContact(editContact.contactId)}
-          >
-            Yes
-          </button>
-          <button
-            className={css.btn}
-            type="button"
-            onClick={() => {
-              dispatch(closeDeleteModal());
-            }}
-          >
-            No
-          </button>
+          <div className={css.btnBox}>
+            <button
+              className={css.btn}
+              type="button"
+              onClick={() => handleDeleteContact(editContact.contactId)}
+            >
+              Yes
+            </button>
+
+            <button
+              className={css.btn}
+              type="button"
+              onClick={() => {
+                dispatch(closeDeleteModal());
+              }}
+            >
+              No
+            </button>
+          </div>
         </Modal>
       )}
     </>

@@ -13,7 +13,7 @@ const UserMenu = () => {
   };
   return (
     <div className={css.userInfo}>
-      <p>Hello, {user.name}!</p>
+      <p className={css.text}>Hello, {user.name}!</p>
       <button className={css.btn} type="button" onClick={handleClick}>
         Logout
       </button>

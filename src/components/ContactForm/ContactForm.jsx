@@ -3,6 +3,7 @@ import { addContact } from '../../redux/contacts/operations';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import css from './ContactForm.module.css';
+import toast from 'react-hot-toast';
 
 const initialValues = {
   name: '',
@@ -32,8 +33,12 @@ const ContactForm = () => {
     const newContact = {
       ...values,
     };
-    dispatch(addContact(newContact));
-    actions.resetForm();
+    dispatch(addContact(newContact))
+      .unwrap()
+      .then(() => {
+        toast.success('Contact added successfully🎉');
+        actions.resetForm();
+      });
   };
   return (
     <>

@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { fetchContacts } from '../../redux/contacts/operations';
-import { selectIsLoading } from '../../redux/contacts/selctors';
 import ContactList from '../../components/ContactList/ContactList';
 import ContactForm from '../../components/ContactForm/ContactForm';
 import SearchBox from '../../components/SearchBox/SearchBox';
+import Section from '../../components/Section/Section';
+import Container from '../../components/Container/Container';
 
 function ContactsPage() {
   const dispatch = useDispatch();
-  const isLoading = useSelector(selectIsLoading);
 
   useEffect(() => {
     dispatch(fetchContacts());
@@ -16,10 +16,17 @@ function ContactsPage() {
 
   return (
     <>
-      <div>{isLoading && 'Request in progress...'}</div>
-      <ContactForm />
-      <SearchBox />
-      <ContactList />
+      <Section>
+        <Container>
+          <ContactForm />
+        </Container>
+        <Container>
+          <SearchBox />
+        </Container>
+        <Container>
+          <ContactList />
+        </Container>
+      </Section>
     </>
   );
 }

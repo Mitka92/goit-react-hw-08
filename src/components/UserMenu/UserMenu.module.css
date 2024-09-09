@@ -19,3 +19,11 @@
   gap: 20px;
   align-items: center;
 }
+.text {
+  overflow: hidden;
+}
+@media (max-width: 420px) {
+  .text {
+    display: none;
+  }
+}

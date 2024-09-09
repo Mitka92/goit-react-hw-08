@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import css from './LoginForm.module.css';
 import { login } from '../../redux/auth/operations';
+import toast from 'react-hot-toast';
 
 const initialValues = {
   email: '',
@@ -27,7 +28,14 @@ const LoginForm = () => {
     const loginValues = {
       ...values,
     };
-    dispatch(login(loginValues));
+    dispatch(login(loginValues))
+      .unwrap()
+      .then(data => {
+        toast.success(`Hello ${data.user.name}!`);
+      })
+      .catch(() => {
+        toast.error('Wrong  login or password');
+      });
     actions.resetForm();
   };
   return (

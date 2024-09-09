@@ -14,7 +14,7 @@ const SearchBox = () => {
       <h2 className={css.title}>Search</h2>
       <div className={css.wrapper}>
         <input
-          placeholder="Search by name"
+          placeholder="Name or number"
           className={css.input}
           type="text"
           name="search"

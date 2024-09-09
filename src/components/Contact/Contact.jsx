@@ -1,6 +1,6 @@
-import { IoIosContact } from 'react-icons/io';
-import { FaPhone } from 'react-icons/fa6';
+import { FcPhoneAndroid } from 'react-icons/fc';
 import { IconContext } from 'react-icons';
+import { FcContacts } from 'react-icons/fc';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIsLoading } from '../../redux/contacts/selctors';
 import css from './Contact.module.css';
@@ -31,21 +31,19 @@ const Contact = ({ id, name, number, sendDataToParent }) => {
         <div className={css.info}>
           <div className={css.name}>
             <IconContext.Provider
-              value={{ color: 'blue', className: [css.icon] }}
+              value={{ color: 'blue', className: [css.icon], size: '32px' }}
             >
-              <IoIosContact />
+              <FcContacts />
             </IconContext.Provider>
             <b>{name}</b>
           </div>
           <div className={css.number}>
-            <a href={`tel:${number}`}>
-              <IconContext.Provider
-                value={{ color: 'blue', className: [css.icon] }}
-              >
-                <FaPhone />
-              </IconContext.Provider>
-              {number}
-            </a>
+            <IconContext.Provider
+              value={{ color: 'blue', className: [css.icon], size: '32px' }}
+            >
+              <FcPhoneAndroid />
+            </IconContext.Provider>
+            <a href={`tel:${number}`}>{number}</a>
           </div>
         </div>
         <div className={css.btnBox}>

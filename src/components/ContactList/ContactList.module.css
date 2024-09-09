@@ -11,3 +11,26 @@
 .title {
   text-align: center;
 }
+.btnBox {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
+}
+.btn {
+  width: 80px;
+  height: 25px;
+  font-size: 14px;
+  box-sizing: border-box;
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  outline: none;
+  border: 1px solid #007bff;
+}
+.btn:hover {
+  background-color: #007bffc1;
+}

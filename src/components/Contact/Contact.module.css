@@ -2,7 +2,20 @@
   display: flex;
   flex-direction: column;
   text-align: start;
+  justify-content: center;
   padding: 10px;
+  /* Додаємо ці властивості для обрізання інформації */
+  max-width: 100%; /* Задайте максимальну ширину */
+  white-space: nowrap; /* Запобігає переносу тексту на новий рядок */
+  overflow: hidden; /* Приховує текст, який не вміщається */
+}
+.name {
+  overflow: hidden;
+  text-overflow: ellipsis; /* Додає "..." в кінці тексту */
+}
+.number {
+  overflow: hidden;
+  text-overflow: ellipsis; /* Додає "..." в кінці тексту */
 }
 .contact {
   display: flex;
@@ -12,8 +25,6 @@
   border-radius: 8px;
   overflow: hidden;
   border: 1px solid #007bff;
-  transition: all 0.3s;
-  scale: 1;
 }
 .btnBox {
   display: flex;

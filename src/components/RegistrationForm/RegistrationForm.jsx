@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import css from './RegistrationForm.module.css';
 import { register } from '../../redux/auth/operations';
+import toast from 'react-hot-toast';
 
 const initialValues = {
   name: '',
@@ -33,7 +34,16 @@ const RegistrationForm = () => {
     const newProfile = {
       ...values,
     };
-    dispatch(register(newProfile));
+    dispatch(register(newProfile))
+      .unwrap()
+      .then(data => {
+        toast.success(
+          `Hello ${data.user.name}! You are successfully registered!`
+        );
+      })
+      .catch(() => {
+        toast.error('This email is already registered. Try another one!');
+      });
     actions.resetForm();
   };
   return (

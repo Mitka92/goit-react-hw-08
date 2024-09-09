@@ -1,0 +1,18 @@
+.wrapper {
+  text-align: center;
+  background-color: hsla(211, 100%, 50%, 0.146);
+  border-radius: 40px;
+  border: 1px solid grey;
+  padding: 20px;
+}
+.title {
+  font-size: 38px;
+  margin-bottom: 60px;
+  text-transform: uppercase;
+}
+.text {
+  font-size: 28px;
+}
+.span {
+  display: block;
+}
