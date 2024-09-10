@@ -5,6 +5,7 @@ import {
   editContact,
   fetchContacts,
 } from './operations';
+import { logOut } from '../auth/operations';
 
 const initialState = {
   items: [],
@@ -16,9 +17,6 @@ const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
   reducers: {
-    clearContacts: state => {
-      state.items = [];
-    },
   },
   extraReducers: builder =>
     builder
@@ -74,8 +72,21 @@ const contactsSlice = createSlice({
       .addCase(editContact.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      }).addCase(logOut.pending, (state) => {
+        state.error = null;
+        state.loading = true;
+
+      })
+      .addCase(logOut.fulfilled, (state) => {
+        state.items = [];
+        state.error = null;
+        state.loading = false;
+      })
+      .addCase(logOut.rejected, (state, action) => {
+        state.error = action.payload;
+        state.loading = false;
       }),
 });
 
 export const contactsReducer = contactsSlice.reducer;
-export const { clearContacts } = contactsSlice.actions;
+

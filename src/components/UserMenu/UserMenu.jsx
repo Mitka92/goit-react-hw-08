@@ -1,15 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../../redux/auth/operations';
 import css from './UserMenu.module.css';
-import { clearContacts } from '../../redux/contacts/slice';
 import { selectUser } from '../../redux/auth/selctors';
+import { logOut } from '../../redux/auth/operations';
 
 const UserMenu = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const handleClick = () => {
-    dispatch(logout());
-    dispatch(clearContacts());
+    dispatch(logOut());
   };
   return (
     <div className={css.userInfo}>

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  selectError,
+  selectContactsError,
   selectFilteredContacts,
   selectIsLoading,
 } from '../../redux/contacts/selctors';
@@ -19,12 +19,14 @@ import Container from '../Container/Container';
 import Loader from '../Loader/Loader';
 import toast from 'react-hot-toast';
 
+
 const ContactList = () => {
   const dispatch = useDispatch();
 
   const filteredContacts = useSelector(selectFilteredContacts);
   const isLoading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
+  const error = useSelector(selectContactsError);
+
 
   const [editContact, setEditContact] = useState({
     contactId: '',
@@ -79,7 +81,7 @@ const ContactList = () => {
           )}
         </Container>
       )}
-      {error && `${error}`}
+      {error && <h3>{error}</h3>}
       {isEditModalOpen && (
         <Modal
           isOpen={isEditModalOpen}
